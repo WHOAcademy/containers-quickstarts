@@ -1,0 +1,17 @@
+pipeline {
+    agent {
+      label 'jenkins-agent-docker'
+    }
+
+    stages {
+        stage ('Run Test') {
+            steps {
+              sh """
+                  docker --version
+              """
+            }
+        }
+
+    }
+
+}
