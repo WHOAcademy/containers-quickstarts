@@ -20,6 +20,6 @@ WORKDIR $HOME
 ADD pom.xml pom.xml
 # 2. start downloading dependencies
 
-RUN --mount=type=cache,target=/root/.m2 mvn -e -B -f ./pom.xml -s settings.xml dependency:resolve-plugins dependency:resolve
+RUN --mount=type=cache,target=/root/.m2 mvn -e -X -B -f ./pom.xml -s settings.xml dependency:resolve-plugins dependency:resolve
 
 USER 1001
