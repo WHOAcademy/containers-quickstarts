@@ -1,5 +1,5 @@
 FROM quay.io/openshift/origin-jenkins-agent-maven:4.6
-ADD settings.xml $HOME/.m2/settings.xml
+ADD settings.xml settings.xml
 #WORKDIR $HOME
 #COPY pom.xml ./
 #RUN mvn -e org.apache.maven.plugins:maven-dependency-plugin:2.10:tree -Dverbose=true
@@ -17,11 +17,9 @@ WORKDIR $HOME
 
 # 1. add pom.xml only here
 
-ADD pom.xml $HOME
-
+ADD pom.xml pom.xml
 # 2. start downloading dependencies
 
-RUN mvn dependency:go-offline
-
+RUN --mount=type=cache,target=/root/.m2 mvn -B -f ./pom.xml -s settings.xml dependency:resolve-plugins dependency:resolve
 
 USER 1001
