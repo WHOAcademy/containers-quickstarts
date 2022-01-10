@@ -1,5 +1,5 @@
 FROM quay.io/openshift/origin-jenkins-agent-maven:4.6
-ADD settings.xml settings.xml
+ADD settings.xml /home/settings.xml
 #WORKDIR $HOME
 #COPY pom.xml ./
 #RUN mvn -e org.apache.maven.plugins:maven-dependency-plugin:2.10:tree -Dverbose=true
