@@ -21,7 +21,7 @@ ADD pom.xml $HOME
 
 # 2. start downloading dependencies
 
-RUN mvn -Dmaven.repo.local=./.m2 install assembly:single
+RUN mvn dependency:go-offline
 
 
 USER 1001
