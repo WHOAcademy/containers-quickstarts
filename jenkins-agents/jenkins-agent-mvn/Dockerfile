@@ -21,16 +21,7 @@ ADD pom.xml $HOME
 
 # 2. start downloading dependencies
 
-RUN ["/usr/local/bin/mvn-entrypoint.sh", "mvn", "verify", "clean", "--fail-never"]
+RUN mvn -Dmaven.repo.local=./.m2 install assembly:single
 
-# 3. add all source code and start compiling
-
-ADD . $HOME
-
-RUN ["mvn", "package"]
-
-EXPOSE 8005
-
-CMD ["java", "-jar", "./target/dist.jar"]
 
 USER 1001
