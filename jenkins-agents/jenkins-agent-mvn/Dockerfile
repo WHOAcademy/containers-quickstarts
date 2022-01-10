@@ -9,7 +9,7 @@ ADD settings.xml $HOME/.m2/settings.xml
 
 ENV HOME=/home/
 
-RUN chmod 777 /home/usr/app
+#RUN chmod 777 /home/usr/app
 
 RUN mkdir -p $HOME
 
