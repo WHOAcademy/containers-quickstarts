@@ -2,6 +2,6 @@ FROM quay.io/openshift/origin-jenkins-agent-maven:4.6
 ADD settings.xml $HOME/.m2/settings.xml
 WORKDIR $HOME
 COPY pom.xml ./
-RUN mvn dependency:purge-local-repository
+RUN mvn -X dependency:purge-local-repository
 RUN mvn package 
 USER 1001
