@@ -7,7 +7,7 @@ ADD settings.xml $HOME/.m2/settings.xml
 #RUN mvn package 
 #USER 1001
 
-ENV HOME=/home/usr/app
+ENV HOME=/home/
 
 RUN chmod 777 /home/usr/app
 
