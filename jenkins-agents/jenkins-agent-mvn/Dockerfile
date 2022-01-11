@@ -8,19 +8,19 @@
 #USER 1001
 
 FROM quay.io/openshift/origin-jenkins-agent-maven:4.6
-ADD settings.xml $HOME/settings.xml
+ADD settings.xml $HOME/.m2/settings.xml
 
-ENV HOME=/home/
+#ENV HOME=/home/
 
 #RUN chmod 777 /home/usr/app
 
-RUN mkdir -p $HOME
+#RUN mkdir -p $HOME
 
-WORKDIR $HOME
+WORKDIR $HOME/.m2
 
 # 1. add pom.xml only here
 
-ADD pom.xml pom.xml
+ADD pom.xml $HOME/.m2/pom.xml
 # 2. start downloading dependencies
 
 #RUN --mount=type=cache,target=/root/.m2 mvn -e -X -B -f ./pom.xml -s settings.xml dependency:resolve-plugins dependency:resolve
