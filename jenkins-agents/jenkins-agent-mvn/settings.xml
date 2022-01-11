@@ -13,8 +13,4 @@
       <password>admin123</password>
     </server>
   </servers>
-
-  <pluginGroups>
-    <pluginGroup>org.apache.maven.plugins</pluginGroup>
-  </pluginGroups>
 </settings>
