@@ -153,7 +153,7 @@
                 <artifactId>maven-dependency-plugin</artifactId>
                 <version>3.2.0</version>
 				<configuration>
-                    <goalPrefix>dependency</goalPrefix>
+                    <resolvePrefix>dependency</resolvePrefix>
                 </configuration>
 			</plugin>
 		</plugins>
