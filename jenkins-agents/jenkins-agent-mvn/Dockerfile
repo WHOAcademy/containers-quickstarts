@@ -6,7 +6,7 @@ WORKDIR $HOME
 
 ADD pom.xml $HOME/pom.xml
 # 2. start downloading dependencies
-RUN mvn dependency:resolve
+RUN mvn dependencies:resolve
 
 
 USER 1001
