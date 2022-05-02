@@ -10,6 +10,4 @@ ADD pom.xml pom.xml
 # 2. start downloading dependencies
 RUN mvn dependency:resolve
 
-ENTRYPOINT ["tail", "-f", "/dev/null"]
-
 USER 1001
