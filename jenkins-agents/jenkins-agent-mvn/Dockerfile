@@ -1,4 +1,4 @@
-FROM quay.io/openshift/origin-jenkins-agent-maven:4.6
+FROM quay.io/openshift/origin-jenkins-agent-maven:4.9.0
 ENV HOME = $HOME/.m2
 WORKDIR $HOME
 ADD settings.xml $HOME/settings.xml
