@@ -1,0 +1,16 @@
+pipeline {
+    agent {
+      label 'jenkins-agent-maven'
+    }
+
+    stages {
+        stage ('Run Test') {
+            steps {
+              sh """
+                  mvn --version
+              """
+            }
+        }
+
+    }
+}
