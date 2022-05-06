@@ -8,6 +8,6 @@ RUN curl https://downloads.apache.org/maven/binaries/apache-maven-3.2.2-bin.tar.
 RUN echo "export M2_HOME=/opt/apache-maven-3.2.2" >> .bashrc && \
     echo "export PATH=${M2_HOME}/bin:${PATH}" >> .bashrc
 
-RUN mvn -version
+RUN cat .bashrc
 
 USER 1001
