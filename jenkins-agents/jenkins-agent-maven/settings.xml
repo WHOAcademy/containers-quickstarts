@@ -1,0 +1,16 @@
+<settings>
+  <mirrors>
+    <mirror>
+      <id>maven-public</id>
+      <url>http://sonatype-nexus-service.labs-ci-cd:8081/repository/maven-public/</url>
+      <mirrorOf>*</mirrorOf>
+    </mirror>
+  </mirrors>
+  <servers>
+    <server>
+      <id>nexus</id>
+      <username>kmadhavan</username>
+      <password>test1234</password>
+    </server>
+  </servers>
+</settings>
