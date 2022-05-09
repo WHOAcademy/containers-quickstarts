@@ -1,6 +1,6 @@
 pipeline {
     agent {
-      label 'jenkins-agent-mvn'
+      label 'jenkins-agent-maven'
     }
 
     stages {
@@ -13,5 +13,4 @@ pipeline {
         }
 
     }
-
 }
