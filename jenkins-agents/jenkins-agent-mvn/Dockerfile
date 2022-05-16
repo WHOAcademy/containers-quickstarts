@@ -38,3 +38,5 @@ RUN if [ "$USE_CHROME_STABLE" = "true" ]; then \
   
 # Run everything after as non-privileged user.
 
+USER 1001
+
