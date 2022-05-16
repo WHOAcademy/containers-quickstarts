@@ -12,8 +12,6 @@ ENV CHROME_PATH=/usr/bin/google-chrome
 ENV HOST=0.0.0.0
 ENV IS_DOCKER=true
 ENV LANG="C.UTF-8"
-ENV NODE_ENV=production
-ENV PORT=3000
 ENV USE_CHROME_STABLE=${USE_CHROME_STABLE}
 
 
@@ -21,9 +19,6 @@ RUN mkdir -p $APP_DIR &&\
     chown -R root:root $APP_DIR
 
 WORKDIR $APP_DIR
-
-# Install app dependencies
-COPY . .
 
 # Install Chrome Stable when specified
 RUN if [ "$USE_CHROME_STABLE" = "true" ]; then \
@@ -43,4 +38,3 @@ RUN if [ "$USE_CHROME_STABLE" = "true" ]; then \
   
 # Run everything after as non-privileged user.
 
-USER 1001
