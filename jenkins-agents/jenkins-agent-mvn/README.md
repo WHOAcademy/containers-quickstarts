@@ -7,6 +7,8 @@ This agent extends [the Jenkins Maven Agent shipped with OpenShift](https://acce
 oc process -f ../../.openshift/templates/jenkins-agent-generic-template.yml \
     -p NAME=jenkins-agent-mvn \
     -p SOURCE_CONTEXT_DIR=jenkins-agents/jenkins-agent-mvn \
+    -p SOURCE_REPOSITORY_REF=master \
+    -p BUILDER_IMAGE_NAME=quay.io/openshift/origin-jenkins-agent-maven:4.9 \
     -p DOCKERFILE_PATH=Dockerfile \
     | oc create -f -
 ```
