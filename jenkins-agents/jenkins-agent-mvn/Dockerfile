@@ -10,7 +10,7 @@ COPY centos.repo /tmp/
 COPY *.repo /etc/yum.repos.d/
 COPY RPM-GPG-KEY-CentOS-Official /etc/pki/rpm-gpg/
 
-RUN INSTALL_PKGS="xdg-utils liberation-fonts google-chrome" && \
+RUN INSTALL_PKGS="xdg-utils liberation-fonts google-chrome-stable" && \
     rm -f /etc/yum.repos.d/*.repo && \
     mv /tmp/centos.repo /etc/yum.repos.d/centos.repo && \
     mv /tmp/google-chrome.repo /etc/yum.repos.d/google-chrome.repo && \
