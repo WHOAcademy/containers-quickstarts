@@ -1,6 +1,6 @@
 pipeline {
     agent {
-      label 'jenkins-agent-python'
+      label 'jenkins-agent-python39'
     }
 
     stages {
@@ -8,7 +8,6 @@ pipeline {
             steps {
               sh """
                   python -V
-                  java -version
               """
             }
         }
