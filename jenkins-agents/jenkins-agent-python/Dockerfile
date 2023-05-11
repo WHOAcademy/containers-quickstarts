@@ -19,8 +19,6 @@ RUN INSTALL_PKGS=" \
     DISABLE_REPOS=--disablerepo='rhel-*' && \
     yum -y localinstall http://mirror.centos.org/centos/7/os/x86_64/Packages/libtirpc-0.2.4-0.16.el7.x86_64.rpm && \
     yum $DISABLE_REPOS install -y yum-utils && \
-    yum -y update && \
-    yum -y upgrade openssl && \
     yum -y --setopt=tsflags=nodocs $DISABLE_REPOS install $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum -y clean all --enablerepo='*' && \
@@ -28,6 +26,17 @@ RUN INSTALL_PKGS=" \
     scl enable rh-python38 bash && \
     python3 -m pip install --upgrade pip && \
     python3 -m pip install twine Pillow cffi Brotli
+
+RUN curl https://www.openssl.org/source/openssl-1.1.1l.tar.gz | tar xz && \
+    cd openssl-1.1.1l && \
+    ./config --prefix=/usr/local/ssl --openssldir=/usr/local/ssl && \
+    make && \
+    make test && \
+    make install
+
+ENV PATH="/usr/local/ssl/bin:${PATH}"
+RUN echo "/usr/local/ssl/lib" >> /etc/ld.so.conf.d/openssl-1.1.1l.conf && \
+    ldconfig -v
 
 ADD scl_enable /usr/share/container-scripts/
 ENV BASH_ENV=/usr/share/container-scripts/scl_enable \
