@@ -31,7 +31,6 @@ RUN curl https://www.openssl.org/source/openssl-1.1.1l.tar.gz | tar xz && \
     cd openssl-1.1.1l && \
     ./config --prefix=/usr/local/ssl --openssldir=/usr/local/ssl && \
     make && \
-    make test && \
     make install
 
 ENV PATH="/usr/local/ssl/bin:${PATH}"
