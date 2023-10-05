@@ -20,13 +20,13 @@ RUN INSTALL_PKGS=" \
     yum -y localinstall http://mirror.centos.org/centos/7/os/x86_64/Packages/libtirpc-0.2.4-0.16.el7.x86_64.rpm && \
     yum $DISABLE_REPOS install -y yum-utils && \
     yum -y --setopt=tsflags=nodocs $DISABLE_REPOS install $INSTALL_PKGS && \
-    yum -y upgrade sqlite3 && \
     rpm -V $INSTALL_PKGS && \
     yum -y clean all --enablerepo='*' && \
     source scl_source enable rh-python38 && \
     scl enable rh-python38 bash && \
     python3 -m pip install --upgrade pip && \
-    python3 -m pip install twine
+    python3 -m pip install twine && \
+    cd ~ && wget https://www.sqlite.org/2023/sqlite-autoconf-3430100.tar.gz && tar xvfz sqlite-autoconf-3430100.tar.gz && cd sqlite-autoconf-3430100 && ./configure && make && make install
 
 ADD scl_enable /usr/share/container-scripts/
 ENV BASH_ENV=/usr/share/container-scripts/scl_enable \
