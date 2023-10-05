@@ -20,7 +20,7 @@ RUN INSTALL_PKGS=" \
     yum -y localinstall http://mirror.centos.org/centos/7/os/x86_64/Packages/libtirpc-0.2.4-0.16.el7.x86_64.rpm && \
     yum $DISABLE_REPOS install -y yum-utils && \
     yum -y --setopt=tsflags=nodocs $DISABLE_REPOS install $INSTALL_PKGS && \
-    yum -y upgrade sqlite3
+    yum -y upgrade sqlite3 && \
     rpm -V $INSTALL_PKGS && \
     yum -y clean all --enablerepo='*' && \
     source scl_source enable rh-python38 && \
