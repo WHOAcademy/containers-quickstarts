@@ -31,6 +31,7 @@ RUN INSTALL_PKGS=" \
 ADD scl_enable /usr/share/container-scripts/
 ENV BASH_ENV=/usr/share/container-scripts/scl_enable \
     ENV=/usr/share/container-scripts/scl_enable \
-    PROMPT_COMMAND=". /usr/share/container-scripts/scl_enable"
+    PROMPT_COMMAND=". /usr/share/container-scripts/scl_enable" \
+    LD_LIBRARY_PATH: "/usr/local/lib"
 
 USER 1001
