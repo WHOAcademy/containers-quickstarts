@@ -22,7 +22,6 @@ RUN INSTALL_PKGS=" \
     dnf -y clean all && \
     alternatives --set python3 /usr/bin/python3.8 && \
     python3 -m pip install --upgrade pip && \
-    python3 -m pip install twine && \
-    cd ~ && wget https://www.sqlite.org/2023/sqlite-autoconf-3430100.tar.gz && tar xvfz sqlite-autoconf-3430100.tar.gz && cd sqlite-autoconf-3430100 && ./configure && make && make install
+    python3 -m pip install twine
 
 USER 1001
