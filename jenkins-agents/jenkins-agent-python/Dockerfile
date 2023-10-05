@@ -25,13 +25,11 @@ RUN INSTALL_PKGS=" \
     source scl_source enable rh-python38 && \
     scl enable rh-python38 bash && \
     python3 -m pip install --upgrade pip && \
-    python3 -m pip install twine && \
-    cd ~ && wget https://www.sqlite.org/2023/sqlite-autoconf-3430100.tar.gz && tar xvfz sqlite-autoconf-3430100.tar.gz && cd sqlite-autoconf-3430100 && ./configure && make && make install
+    python3 -m pip install twine
 
 ADD scl_enable /usr/share/container-scripts/
 ENV BASH_ENV=/usr/share/container-scripts/scl_enable \
     ENV=/usr/share/container-scripts/scl_enable \
-    PROMPT_COMMAND=". /usr/share/container-scripts/scl_enable" \
-    LD_LIBRARY_PATH: "/usr/local/lib"
+    PROMPT_COMMAND=". /usr/share/container-scripts/scl_enable"
 
 USER 1001
