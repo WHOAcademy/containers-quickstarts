@@ -1,21 +1,53 @@
-#invoke npm in jenkinsfile: sh "scl enable rh-nodejs6 'npm run build'"
-FROM quay.io/openshift/origin-jenkins-agent-base:4.6
+# Builder
+FROM registry.access.redhat.com/ubi9/ubi:9.8 AS builder
 
-ENV NODEJS_VERSION=12 \
-    NPM_CONFIG_PREFIX=$HOME/.npm-global \
-    PATH=$HOME/node_modules/.bin/:$HOME/.npm-global/bin/:$PATH
+ARG YQ_VERSION=v4.50.1
+ARG JQ_VERSION=1.6
 
-RUN curl --silent --location https://rpm.nodesource.com/setup_${NODEJS_VERSION}.x | bash -
+RUN curl -L \
+    "https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64" \
+    -o /usr/local/bin/yq \
+    && chmod +x /usr/local/bin/yq \
+    && yq --version
 
-RUN INSTALL_PKGS="nodejs" && \
-    dnf $DISABLE_REPOS install -y --setopt=tsflags=nodocs --disablerepo='rhel-*' \
-      $INSTALL_PKGS && \
-    rpm -V $INSTALL_PKGS && \
-    dnf clean all -y && \
-    rm -rf /var/cache/yum && \
-    npm install --unsafe-perm -g npm-audit-html npm-audit-ci-wrapper sonar-scanner || cat /home/jenkins/.npm/_logs/*-debug.log && \
-    chown root:root /home/jenkins -R && \
-    chmod 775 /home/jenkins/.config -R && \
-    chmod 775 /home/jenkins/.npm -R
+RUN curl -L \
+    "https://github.com/stedolan/jq/releases/download/jq-${JQ_VERSION}/jq-linux64" \
+    -o /usr/local/bin/jq \
+    && chmod +x /usr/local/bin/jq \
+    && jq --version
+
+
+# Jenkins agent
+FROM ghcr.io/redhat-cop/containers-quickstarts/jenkins-agent:v4.18
+
+ARG NODEJS_VERSION=24
+
+LABEL name="redhat-cop/jenkins-agent-npm" \
+      io.k8s.display-name="Jenkins Agent npm" \
+      io.k8s.description="The jenkins agent npm." \
+      com.redhat.component="redhat-cop/containers-quickstarts/jenkins-agent-npm"
+
+ENV NPM_CONFIG_PREFIX="$HOME/.npm-global" \
+    PATH="$HOME/node_modules/.bin/:$HOME/.npm-global/bin/:$PATH"
+
+USER root
+
+COPY package.json /tmp/package.json
+
+RUN dnf module enable -y nodejs:${NODEJS_VERSION} \
+    && dnf install --nodocs -y nodejs \
+    && dnf clean all \
+    && npm install -g /tmp
+
+RUN chown -R 1001:0 /home/jenkins/.npm \
+    && chmod -R 775 /home/jenkins/.npm
+
+COPY --from=builder /usr/local/bin/yq /usr/local/bin/yq
+COPY --from=builder /usr/local/bin/jq /usr/local/bin/jq
 
 USER 1001
+
+RUN yq --version \
+    && jq --version \
+    && npm --version \
+    && node --version
