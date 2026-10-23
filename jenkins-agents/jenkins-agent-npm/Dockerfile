@@ -20,7 +20,7 @@ RUN curl -L \
 # Jenkins agent
 FROM ghcr.io/redhat-cop/containers-quickstarts/jenkins-agent:v4.18
 
-ARG NODEJS_VERSION=24
+ARG NODEJS_VERSION=24.22.1
 
 LABEL name="redhat-cop/jenkins-agent-npm" \
       io.k8s.display-name="Jenkins Agent npm" \
@@ -34,9 +34,13 @@ USER root
 
 COPY package.json /tmp/package.json
 
-RUN dnf module enable -y nodejs:${NODEJS_VERSION} \
-    && dnf install --nodocs -y nodejs \
-    && dnf clean all \
+RUN NODEJS_TARBALL="node-v${NODEJS_VERSION}-linux-x64.tar.gz" \
+    && cd /tmp \
+    && curl -fsSLO "https://nodejs.org/dist/v${NODEJS_VERSION}/${NODEJS_TARBALL}" \
+    && curl -fsSL "https://nodejs.org/dist/v${NODEJS_VERSION}/SHASUMS256.txt" \
+       | grep " ${NODEJS_TARBALL}\$" | sha256sum -c - \
+    && tar -xzf "${NODEJS_TARBALL}" -C /usr/local --strip-components=1 --no-same-owner \
+    && rm -f "${NODEJS_TARBALL}" \
     && npm install -g /tmp
 
 RUN chown -R 1001:0 /home/jenkins/.npm \
